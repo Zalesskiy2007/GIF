@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\BITRW">
+      <UniqueIdentifier>{a313aa6e-920f-40cb-8cb0-0cd511a220d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\LZW">
+      <UniqueIdentifier>{f0205ca3-2403-4e84-b6db-e4e000624276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GIF">
+      <UniqueIdentifier>{d1b100c0-f577-47b2-94f5-e7ad59bf65f4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\def.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gif.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bitrw\read.h">
+      <Filter>Source Files\BITRW</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bitrw\write.h">
+      <Filter>Source Files\BITRW</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lzw\decoder.h">
+      <Filter>Source Files\LZW</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lzw\encoder.h">
+      <Filter>Source Files\LZW</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gif\gif_file.h">
+      <Filter>Source Files\GIF</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\gif.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lzw\decoder.cpp">
+      <Filter>Source Files\LZW</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
