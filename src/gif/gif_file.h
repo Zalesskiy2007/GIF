@@ -36,7 +36,6 @@ namespace gif
     INT Format;
     INT BitsPerPixel;
     INT LocalTableSize;
-    std::vector<INT> Ind;
   };
 
   struct RGB
@@ -57,6 +56,9 @@ namespace gif
     RGB *GlobalTable = nullptr;
     RGB *LocalTable = nullptr;
 
+    INT BitAccum = 0;
+    INT BitPos = -1;
+
     /* Class constructor */ 
     gif( VOID )
     {
@@ -66,6 +68,41 @@ namespace gif
     ~gif( VOID )
     {
     }
+
+    INT ReadBit(VOID)
+    {
+      if (BitPos < 0)
+      {
+        INT x;
+
+        File.read((CHAR *)&x, 1);
+
+        if (x == EOF)
+          return EOF;
+        BitAccum = x, BitPos = 7;
+      }
+      return (BitAccum >> BitPos--) & 1;
+    }
+
+    /* Read as bits function.
+     * ARGUMENTS:
+     * 	  - Count of bits:
+     *	      INT B;
+     * RETURNS: Readed Data.
+     */
+    INT ReadAsBits( INT B )
+    {
+      INT x = 0;
+
+      for (INT i = B - 1; i >= 0; i--)
+      {
+        INT z = ReadBit();
+        x += z << i;
+        if (z == EOF)
+          return EOF;
+      }
+      return x;
+    } /* End of 'ReadAsBits' function */
 
     VOID FRead( VOID *Ptr, INT Size )
     {
@@ -189,15 +226,20 @@ namespace gif
 
       /* DECOMPRESS */
 
+      BYTE start_bits, cur_bits;
+      FRead(&start_bits, 1);
+
      /* INT Cur, Next;
-      INT DictSize = 258;
-      INT CurBit = 9;
+      INT code_clear = pow(2, start_bits);
+      INT code_term = code_clear + 1;
+      INT DictSize = code_term + 1;
+      INT CurBit = start_bits + 1;
       INT i = 0, code;
-  
-      //Cur = ReadAsBits(CurBit);
-      if (Cur == ';')
+
+      Cur = ReadAsBits(CurBit);
+      if (Cur == CODE_TERM)
         return;
-      ImageDesc.Ind.push_back(Cur);
+     // Out.put(Cur);
 
       while ((Next = ReadAsBits(CurBit)) != EOF)
       {
@@ -205,19 +247,19 @@ namespace gif
         {
           CurBit++;
           Next <<= 1;
-          //Next |= In.ReadBit();
+          Next |= ReadBit();
         }
 
-        if (Next == ';')
+        if (Next == CODE_TERM)
           break;
-    
+
         if (CurBit >= MAX_BITS)
           break;
 
         if (Next <= 255)
         {
-          Dict[DictSize++] = {Cur, Next};
-         ImageDesc.Ind.push_back(Next);
+          Dict[DictSize++] = { Cur, Next };
+          //Out.put(Next);
         }
         else if (Next < DictSize)
         {
@@ -231,15 +273,15 @@ namespace gif
           }
           Stack[i++] = code;
           while (i--)
-            ImageDesc.Ind.push_back(Stack[i]);
-          Dict[DictSize++] = {Cur, code};
+            ;// Out.put(Stack[i]);
+          Dict[DictSize++] = { Cur, code };
         }
-        else 
+        else
         {
           INT f = Cur;
           while (f > 257)
             f = Dict[f].P;
-          Dict[DictSize++] = {Cur, f};
+          Dict[DictSize++] = { Cur, f };
 
           i = 0;
           code = Next;
@@ -251,12 +293,12 @@ namespace gif
           }
           Stack[i++] = code;
           while (i--)
-            ImageDesc.Ind.push_back(Stack[i]);
+            ;//Out.put(Stack[i]);
         }
 
         Cur = Next;
-      } */
-      /* END OF DECOMPRESS */
+      }
+      */
       
     } /* End of 'Load' function */
 
